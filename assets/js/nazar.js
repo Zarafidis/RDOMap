@@ -1,17 +1,17 @@
 var MadamNazar = {
   possibleLocations: [
-    { "x": "-40.7817", "y": "109.4863", "id": "der" },
-    { "x": "-43.1046", "y": "132.8263", "id": "grz" },
-    { "x": "-36.5097", "y": "154.1859", "id": "bbr" },
-    { "x": "-56.1619", "y": "78.5000", "id": "bgv" },
-    { "x": "-63.8927", "y": "105.3496", "id": "hrt_w" },
-    { "x": "-60.9622", "y": "130.6067", "id": "hrt_e" },
-    { "x": "-65.9688", "y": "150.4468", "id": "blu" },
-    { "x": "-84.2973", "y": "82.4512", "id": "tal" },
-    { "x": "-90.0802", "y": "135.6969", "id": "scm" },
-    { "x": "-100.0742", "y": "49.0765", "id": "cho" },
-    { "x": "-104.7679", "y": "85.7222", "id": "hen" },
-    { "x": "-123.9039", "y": "34.8213", "id": "rio" },
+    { "x": -40.7817, "y": 109.4863, "id": "der", "key": "MPSW_LOCATION_10" },
+    { "x": -43.1046, "y": 132.8263, "id": "grz", "key": "MPSW_LOCATION_07" },
+    { "x": -36.5097, "y": 154.1859, "id": "bbr", "key": "MPSW_LOCATION_11" },
+    { "x": -56.1619, "y": 78.5000, "id": "bgv", "key": "MPSW_LOCATION_04" },
+    { "x": -63.8927, "y": 105.3496, "id": "hrt_w", "key": "MPSW_LOCATION_06" },
+    { "x": -60.9622, "y": 130.6067, "id": "hrt_e", "key": "MPSW_LOCATION_05" },
+    { "x": -65.9688, "y": 150.4468, "id": "blu", "key": "MPSW_LOCATION_09" },
+    { "x": -84.2973, "y": 82.4512, "id": "tal", "key": "MPSW_LOCATION_03" },
+    { "x": -90.0802, "y": 135.6969, "id": "scm", "key": "MPSW_LOCATION_08" },
+    { "x": -100.0742, "y": 49.0765, "id": "cho", "key": "MPSW_LOCATION_01" },
+    { "x": -104.7679, "y": 85.7222, "id": "hen", "key": "MPSW_LOCATION_02" },
+    { "x": -123.9039, "y": 34.8213, "id": "rio", "key": "MPSW_LOCATION_00" }
   ],
   currentLocation: null,
   currentDate: null,
@@ -23,10 +23,10 @@ var MadamNazar = {
       MadamNazar.currentDate = '';
       MadamNazar.addMadamNazar();
     } else {
-      $.getJSON('https://pepegapi.jeanropke.net/rdo/nazar')
-        .done(function (nazar) {
-          MadamNazar.currentLocation = nazar.nazar_id;
-          MadamNazar.currentDate = new Date(nazar.date).toLocaleString(Settings.language, {
+      $.getJSON('https://pepegapi.jeanropke.net/v2/rdo/nazar')
+        .done(function (data) {
+          MadamNazar.currentLocation = MadamNazar.possibleLocations.findIndex(({ key }) => key === data.nazar) + 1;
+          MadamNazar.currentDate = new Date(data.date).toLocaleString(Settings.language, {
             day: "2-digit", month: "long", year: "numeric"
           });
           MadamNazar.addMadamNazar();
